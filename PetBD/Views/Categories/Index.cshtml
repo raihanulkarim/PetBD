@@ -5,10 +5,10 @@
 }
 <div class="container">
     
-<h1>Index</h1>
+<h1>Categories</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-outline-info" asp-action="Create">Add New</a>
 </p>
 <table class="table">
     <thead>
@@ -17,9 +17,9 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsActive)
+                Status
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -29,11 +29,14 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
+                @if(item.IsActive == true){
+                    <p class="text-success fw-bold ">Active</p>
+                }else{
+                    <p class="text-danger fw-bold ">Deactivated</p>
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

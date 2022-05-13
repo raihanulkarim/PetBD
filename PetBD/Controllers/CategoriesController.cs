@@ -22,25 +22,7 @@ namespace PetBD.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
-        }
-
-        // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            return View(await _context.Categories.Where(r=> r.IsDelete == false).ToListAsync());
         }
 
         // GET: Categories/Create
@@ -50,8 +32,6 @@ namespace PetBD.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,IsActive")] Category category)
@@ -73,7 +53,7 @@ namespace PetBD.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories.Where(r => r.IsDelete == false).FirstOrDefaultAsync(r=> r.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -82,8 +62,6 @@ namespace PetBD.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IsActive")] Category category)
@@ -125,6 +103,7 @@ namespace PetBD.Controllers
             }
 
             var category = await _context.Categories
+                .Where(r => r.IsDelete == false)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -140,7 +119,7 @@ namespace PetBD.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var category = await _context.Categories.FindAsync(id);
-            _context.Categories.Remove(category);
+            category.IsDelete = true;
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
