@@ -22,7 +22,7 @@ namespace PetBD.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.Where(r=> r.IsDelete == false).ToListAsync());
+            return View(await _context.Categories.Where(r=> r.IsDelete == false).OrderByDescending(r=> r.Id).ToListAsync());
         }
 
         // GET: Categories/Create

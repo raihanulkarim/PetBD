@@ -1,0 +1,59 @@
+﻿@model PetBD.Models.Slider
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container mt-3">
+    <div class="text-center">
+        <h3>Update Slider</h3>
+        <hr />
+    </div>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubTitle" class="control-label"></label>
+                    <input asp-for="SubTitle" class="form-control" />
+                    <span asp-validation-for="SubTitle" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UploadImage" class="control-label"></label>
+                    <input asp-for="UploadImage" accept="image/*" class="form-control" />
+                    <span asp-validation-for="UploadImage" class="text-danger"></span>
+                </div>
+                 <div class="form-group">
+                    <label asp-for="IsActive" class="control-label">Status:</label>
+                    @if(Model.IsActive == true){
+                        <span class="text-success fw-bold ">Active</span>
+                    }else{
+                        <span class="text-danger fw-bold ">Deactivated</span>
+                    }
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsActive" /> @if(Model.IsActive != true){
+                            <span class="text-success"> Mark as Active</span>
+                        }else{
+                            <span class="text-success"> Mark as Deactive</span>
+                        }
+                    </label>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                     <a asp-action="Index">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

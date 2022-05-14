@@ -15,6 +15,7 @@ namespace PetBD.Data
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
        // public DbSet<ProductCategory> ProductCategory { get; set; }
     }
 }
