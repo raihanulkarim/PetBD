@@ -22,7 +22,7 @@ namespace PetBD.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            return View(await _context.Products.Include(r=> r.Category).Where(r=>r.IsDelete == false).ToListAsync());
         }
 
         // GET: Products/Details/5
@@ -33,7 +33,7 @@ namespace PetBD.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var product = await _context.Products.Include(r => r.Category).Where(r => r.IsDelete == false)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
@@ -46,7 +46,7 @@ namespace PetBD.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["categories"] = _context.Categories.ToList();
+            ViewData["categories"] = _context.Categories.Where(r => r.IsDelete == false).ToList();
             return View();
         }
 
@@ -57,6 +57,11 @@ namespace PetBD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(product.CatID != 0)
+                {
+                    product.Category = await _context.Categories.FindAsync(product.CatID);
+
+                }
                 product.CreatedDate = DateTime.Now;
                 product.ModifiedDate = DateTime.Now;
                 _context.Add(product);
@@ -74,8 +79,8 @@ namespace PetBD.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
-            product.ModifiedDate = DateTime.Now;
+            var product = await _context.Products.Where(r => r.IsDelete == false).Include(r => r.Category).FirstOrDefaultAsync(r => r.Id == id);
+            ViewData["categories"] = _context.Categories.Where(r => r.IsDelete == false).ToList();
             if (product == null)
             {
                 return NotFound();
@@ -84,8 +89,7 @@ namespace PetBD.Controllers
         }
 
         // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IsActive,CreatedDate,ModifiedDate,Description,IsFeatured,Quantity,Image,CatID")] Product product)
@@ -94,12 +98,25 @@ namespace PetBD.Controllers
             {
                 return NotFound();
             }
+            var prod = await _context.Products.FindAsync(id);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(product);
+                    prod.IsFeatured = product.IsFeatured;
+                    prod.Name = product.Name;
+                    prod.Description = product.Description;
+                    prod.Quantity = product.Quantity;
+                    //prod.Image = product.Image;
+                    prod.IsActive = product.IsActive;
+                    prod.ModifiedDate = DateTime.Now;
+                    if (product.CatID != 0)
+                    {
+                        prod.Category = await _context.Categories.FindAsync(product.CatID);
+                        prod.CatID = product.CatID;
+                    }
+                    _context.Update(prod);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -115,7 +132,7 @@ namespace PetBD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(prod);
         }
 
         // GET: Products/Delete/5
@@ -126,7 +143,7 @@ namespace PetBD.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var product = await _context.Products.Where(r => r.IsDelete == false)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
@@ -142,7 +159,7 @@ namespace PetBD.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
+            product.IsDelete = true;
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

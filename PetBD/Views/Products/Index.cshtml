@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<PetBD.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
 }
 
 <div class="container">
-    <h1>Index</h1>
+    <h1>Products</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-outline-primary" asp-action="Create">Add New</a>
 </p>
 <table class="table">
     <thead>
@@ -32,7 +32,7 @@
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CatID)
+                Category
             </th>
             <th>Action</th>
         </tr>
@@ -44,7 +44,11 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
+                 @if(item.IsActive == true){
+                    <p class="text-success fw-bold ">Active</p>
+                    }else{
+                        <p class="text-danger fw-bold ">Deactivated</p>
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedDate)
@@ -53,13 +57,17 @@
                 @Html.DisplayFor(modelItem => item.ModifiedDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsFeatured)
+                @if(item.IsFeatured == true){
+                    <p class="text-success fw-bold ">Featured</p>
+                    }else{
+                        <p class="text-danger fw-bold ">Not Featured</p>
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CatID)
+                @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
