@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetBD.Data;
+using PetBD.Helpers;
 using PetBD.Models;
 using PetBD.ViewModels;
 using System;
@@ -42,5 +43,6 @@ namespace PetBD.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 }

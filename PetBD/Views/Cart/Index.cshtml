@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.Http
+@using PetBD.Helpers
+@{
+    ViewData["Title"] = "Cart";
+}
+<div class="container">
+    @if (ViewBag.CartCounter == 0)
+    {
+        <div class="text-center mt-5 ">
+            <h2>Your Cart is Empty!</h2>
+             <a asp-action="index" asp-controller="home" class="btn btn-outline-info">Let's Shop</a>
+        </div>
+    }
+    else
+    {
+        
+    <div class="card shopping-cart mt-5">
+            <div class="card-header bg-dark text-light">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                Shipping cart
+                <a asp-action="index" asp-controller="home" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
+                <div class="clearfix"></div>
+            </div>
+             @using (Html.BeginForm("updatecart", "cart",FormMethod.Post)){
+            <div class="card-body">
+                @foreach(var item in ViewBag.cart)
+                {
+                    
+                    <!-- PRODUCT -->
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-2 text-center">
+                                <img class="img-responsive" src="~/assets/img/products/@item.Product.Image" alt="prewiew" width="120" height="80">
+                        </div>
+                        <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+                            <h4 class="product-name"><strong>@item.Product.Name</strong></h4>
+                            <h4>
+                                <small>Product description</small>
+                            </h4>
+                        </div>
+                        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                            <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
+                                <h6><strong>@item.Product.Price <span class="text-muted">x</span></strong></h6>
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4">
+                                <div class="quantity">
+                                    <input type="number" step="1" max="99" min="1" value="@item.Quantity" name="Qty" class="qty"
+                                           size="4">
+                                </div>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 text-right">
+                                <a class="btn btn-outline-danger btn-xs asp-controller="cart" asp-action="remove" asp-route-id="@item.Product.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- END PRODUCT -->
+                }
+                <div class="pull-right">
+                    <input class="btn btn-outline-secondary pull-right mb-3" type="submit" value=" Update Shopping Cart" />
+                </div>
+            </div>
+            }
+            <div class="card-footer">
+                <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="Promo Code">
+                        </div>
+                        <div class="col-6">
+                            <input type="submit" class="btn btn-default" value="Use Code">
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right" style="margin: 10px">
+                    <a href="" class="btn btn-success pull-right">Checkout</a>
+                    <div class="pull-right" style="margin: 5px">
+                        Total price: @ViewBag.total <b>tk. </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

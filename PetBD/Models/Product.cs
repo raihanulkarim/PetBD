@@ -18,6 +18,7 @@ namespace PetBD.Models
         public string Description { get; set; }
         public bool IsFeatured { get; set; }
         public int Quantity { get; set; }
+        public int Price { get; set; }
         public string Image { get; set; }
         [Display(Name="Category")]
         public int CatID { get; set; }

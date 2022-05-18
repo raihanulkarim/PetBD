@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using PetBD.Helpers
+@{
+    var cart = Context.Session.Get<List<Item>>("cart");
+    var c = 0;
+    if(cart != null)
+    {
+        c = cart.Count();
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -27,7 +37,7 @@
                         <li class="nav-item"><a class="nav-link" asp-action="index" asp-controller="categories">Category</a></li>
                         <li class="nav-item"><a class="nav-link" asp-action="index" asp-controller="products">Products</a></li>
                         <li class="nav-item"><a class="nav-link" asp-action="index" asp-controller="sliders">Sliders</a></li>
-                        <li class="nav-item dropdown">
+                       <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#!">All Products</a></li>
@@ -37,13 +47,37 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-light" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
+                   
+                    <ul  class=" mb-2 mb-lg-0 ms-lg-4">
+                         @*<li class="nav-item dropdown">
+                            <a class="btn btn-outline-light btn-sm" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-light text-dark ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
+                            <span class="badge bg-light text-dark ms-1 rounded-pill">
+                                @c
+                                </span></a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if (Context.Session.Get<List<Item>>("cart") != null)
+                                {
+                                    foreach (var product in Context.Session.Get<List<Item>>("cart"))
+                                    {
+                                    <li><a class="dropdown-item" href="#!">@product.Product.Name <span class="badge bg-light text-dark ms-1 rounded-pill">@product.Quantity</span> </a> </li>
+                                }
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="p-3 small" href="#!">Checkout</a></li>
+                            }
+                            else
+                            {
+                                <li><span class="p-3">Nothing Found!</span></li>
+                            }
+                        </ul>
+                        </li>
+                        *@
+                        <li class="nav-item"><a class="btn btn-outline-light btn-sm" asp-action="index" asp-controller="cart"><i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-light text-dark ms-1 rounded-pill">
+                                @c
+                                </span></a></li>
+                    </ul>
                     <partial name="_LoginPartial.cshtml" />
                 </div>
             </div>
@@ -63,6 +97,7 @@
         <script src="~/js/scripts.js"></script>
             <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://use.fontawesome.com/c560c025cf.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
     </body>
