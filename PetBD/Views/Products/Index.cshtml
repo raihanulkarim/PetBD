@@ -2,81 +2,87 @@
 
 @{
     ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<div class="container">
-    <h1>Products</h1>
-
-<p>
-    <a class="btn btn-outline-primary" asp-action="Create">Add New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsFeatured)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                Category
-            </th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                 @if(item.IsActive == true){
-                    <p class="text-success fw-bold ">Active</p>
-                    }else{
-                        <p class="text-danger fw-bold ">Deactivated</p>
-                    }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @if(item.IsFeatured == true){
-                    <p class="text-success fw-bold ">Featured</p>
-                    }else{
-                        <p class="text-danger fw-bold ">Not Featured</p>
-                    }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-
+<div class="col-lg-10 grid-margin stretch-card mx-auto">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title text-center">Products</h3>
+            <p class="card-description">
+                <a class="btn btn-outline-info" asp-action="Create">Add New</a>
+            </p>
+            <hr />
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="text-black">
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IsActive)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ModifiedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IsFeatured)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Quantity)
+                            </th>
+                            <th>
+                                Category
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        @foreach (var item in Model) {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @if(item.IsActive == true){
+                                            <label class="badge badge-success">Active</label>
+                                        }else{
+                                            <label class="badge badge-danger">Deactivated</label>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                    </td>
+                                    <td>
+                                        @if(item.IsFeatured == true){
+                                            <label class="badge badge-success">Yes</label>
+                                        }else{
+                                            <label class="badge badge-danger">No</label>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Category.Name)
+                                    </td>
+                                    <td>
+                                        <a class="text-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a class="text-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                        <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                        }
+                     </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

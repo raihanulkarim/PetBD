@@ -2,35 +2,41 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<div class="container">
-    <h1>Add</h1>
-
-    <h4>Category</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input " asp-for="IsActive" /> <span class="text-success"> Mark as Active</span>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add" class="btn btn-primary" />
-                    <a onclick="window.history.back();" class="btn btn-danger">Back</a>
-                </div>
-            </form>
+ <div class="col-lg-6 grid-margin stretch-card mx-auto">
+    <div class="card">
+        <div class="card-body">
+                <h3 class="card-title text-center">Categories</h3>
+                <p class="card-description">
+                     <a class="btn btn-outline-info" asp-action="Create">Add New</a>
+                 </p>
+                 <hr />
+                 <div class="col-md-12">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group row">
+                      <label asp-for="Name" class="col-sm-3 col-form-label">Name</label>
+                      <div class="col-sm-9">
+                        <input type="text" asp-for="Name" class="form-control" placeholder="Name" required>
+                      </div>
+                    </div>
+                    <div class="form-check form-check-flat form-check-primary">
+                      <label class="form-check-label">
+                        <input type="checkbox" asp-for="IsActive" class="form-check-input">
+                       Mark as Active
+                      </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                        <a onclick="window.history.back();" class="btn btn-danger">Back</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

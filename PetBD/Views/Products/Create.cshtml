@@ -1,57 +1,60 @@
 ﻿@model PetBD.Models.Product
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add-Products";
+    //assigning all the categories in the variable
     var cats = (List<Category>)ViewData["categories"];
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<div class="container">
-    <div class="text-center">
-        <h1>Add</h1>
-        <h4>Product</h4>
-        <hr />
-    </div>
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <form asp-action="Create" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input " asp-for="IsActive" /> <span class="text-success"> Mark as Active</span>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <textarea asp-for="Description" class="form-control"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsFeatured" /> Mark as Featured
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Quantity" class="control-label"></label>
-                    <input asp-for="Quantity" class="form-control" />
-                    <span asp-validation-for="Quantity" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                        <label asp-for="CatID">Category</label>
-                        <select asp-for="CatID" required class="form-control" asp-items='new SelectList(cats,"Id","Name")'>
-                            <option value="0">Select Category</option>    
-                        </select>
-                        <span asp-validation-for="CatID" class="text-danger"></span>
+ <div class="col-lg-6 grid-margin stretch-card mx-auto">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title text-center">Products</h3>
+            <p class="card-description">
+                    <a class="btn btn-outline-info" asp-action="Create">Add New</a>
+                </p>
+                <hr />
+                <div class="col-md-12">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                <div class="form-group mt-3">
-                    <input type="submit" value="Add" class="btn btn-primary" />
-                    <a onclick="window.history.back();" class="btn btn-danger">Back</a>
-                </div>
-            </form>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input " asp-for="IsActive" /> Mark as Active
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsFeatured" /> Mark as Featured
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Quantity" class="control-label"></label>
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                            <label asp-for="CatID">Category</label>
+                            <select asp-for="CatID" required class="form-control" asp-items='new SelectList(cats,"Id","Name")'>
+                                <option value="0">Select Category</option>    
+                            </select>
+                            <span asp-validation-for="CatID" class="text-danger"></span>
+                        </div>
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Add" class="btn btn-primary" />
+                        <a onclick="window.history.back();" class="btn btn-danger">Back</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

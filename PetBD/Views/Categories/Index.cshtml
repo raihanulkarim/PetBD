@@ -2,46 +2,51 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="container">
-    
-<h1>Categories</h1>
-
-<p>
-    <a class="btn btn-outline-info" asp-action="Create">Add New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @if(item.IsActive == true){
-                    <p class="text-success fw-bold ">Active</p>
-                }else{
-                    <p class="text-danger fw-bold ">Deactivated</p>
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-
+ <div class="col-lg-6 grid-margin stretch-card mx-auto">
+    <div class="card">
+    <div class="card-body">
+        <h3 class="card-title text-center">Categories</h3>
+        <p class="card-description">
+            <a class="btn btn-outline-info" asp-action="Create">Add New</a>
+        </p>
+        <hr />
+        <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr class="text-black">
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @if(item.IsActive == true){
+                            <label class="badge badge-success">Active</label>
+                        }else{
+                            <label class="badge badge-danger">Deactivated</label>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="text-warning">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
 </div>

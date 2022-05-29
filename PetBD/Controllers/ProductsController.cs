@@ -46,6 +46,7 @@ namespace PetBD.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            //getting all the category to show into the view
             ViewData["categories"] = _context.Categories.Where(r => r.IsDelete == false).ToList();
             return View();
         }
@@ -57,6 +58,7 @@ namespace PetBD.Controllers
         {
             if (ModelState.IsValid)
             {
+                //checking whether category has been selected or not, if selected then assign the relevent category to the product
                 if(product.CatID != 0)
                 {
                     product.Category = await _context.Categories.FindAsync(product.CatID);
@@ -78,7 +80,7 @@ namespace PetBD.Controllers
             {
                 return NotFound();
             }
-
+            //retrieving non deleted products 
             var product = await _context.Products.Where(r => r.IsDelete == false).Include(r => r.Category).FirstOrDefaultAsync(r => r.Id == id);
             ViewData["categories"] = _context.Categories.Where(r => r.IsDelete == false).ToList();
             if (product == null)
@@ -111,6 +113,7 @@ namespace PetBD.Controllers
                     //prod.Image = product.Image;
                     prod.IsActive = product.IsActive;
                     prod.ModifiedDate = DateTime.Now;
+                    //cheking if new category selected then update it
                     if (product.CatID != 0)
                     {
                         prod.Category = await _context.Categories.FindAsync(product.CatID);
@@ -159,6 +162,7 @@ namespace PetBD.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Products.FindAsync(id);
+            //this will not delete the product from the database rather it will update the 'isDelete' column of the Product entity
             product.IsDelete = true;
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
