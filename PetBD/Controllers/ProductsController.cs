@@ -54,7 +54,7 @@ namespace PetBD.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,IsActive,CreatedDate,ModifiedDate,Description,IsFeatured,Quantity,Image,CatID")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Name,IsActive,CreatedDate,ModifiedDate,Description,IsFeatured,Quantity,Price,Image,CatID")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace PetBD.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IsActive,CreatedDate,ModifiedDate,Description,IsFeatured,Quantity,Image,CatID")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IsActive,CreatedDate,ModifiedDate,Description,IsFeatured,Quantity,Price,Image,CatID")] Product product)
         {
             if (id != product.Id)
             {
@@ -110,6 +110,7 @@ namespace PetBD.Controllers
                     prod.Name = product.Name;
                     prod.Description = product.Description;
                     prod.Quantity = product.Quantity;
+                    prod.Price = product.Price;
                     //prod.Image = product.Image;
                     prod.IsActive = product.IsActive;
                     prod.ModifiedDate = DateTime.Now;

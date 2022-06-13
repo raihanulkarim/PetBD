@@ -8,7 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PetBD.Data;
+using PetBD.Helpers;
 using PetBD.Models;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +40,13 @@ namespace PetBD
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddSession();
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe").GetSection("SecretKey").Value;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

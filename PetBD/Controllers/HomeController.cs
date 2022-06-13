@@ -32,7 +32,11 @@ namespace PetBD.Controllers
             ViewBag.SliderCount = homeView.Sliders.Count();
             return View(homeView);
         }
-
+        [Route("payment/success")]
+        public IActionResult PaymentSuccess()
+        {
+            return View();
+        }
         public IActionResult About()
         {
             return View();
