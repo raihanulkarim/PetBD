@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PetBD.Models
 {
@@ -23,5 +25,7 @@ namespace PetBD.Models
         [Display(Name="Category")]
         public int CatID { get; set; }
         public Category Category { get; set; }
+        [NotMapped]
+        public IFormFile UploadImage { get; set; }
     }
 }

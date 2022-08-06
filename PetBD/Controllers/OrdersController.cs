@@ -13,6 +13,7 @@ using PetBD.Models;
 
 namespace PetBD.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -32,6 +32,23 @@ namespace PetBD.Controllers
             ViewBag.SliderCount = homeView.Sliders.Count();
             return View(homeView);
         }
+        [Route("product")]
+        public async Task<IActionResult> Products(string category)
+        {
+            IEnumerable<Product> res = await context.Products.Where(r => r.IsActive == true && r.IsDelete == false).Include(r => r.Category).ToListAsync();
+            if (!String.IsNullOrEmpty(category))
+            {
+                if(category == "all")
+                {
+                    res = await context.Products.Where(r => r.IsActive == true && r.IsDelete == false).Include(r => r.Category).ToListAsync();
+
+                }else if (category == "new")
+                {
+                    res = await context.Products.Where(r => r.IsActive == true && r.IsDelete == false && r.IsFeatured == true).Include(r => r.Category).ToListAsync();
+                }
+            }
+            return View(res);
+        }
         [Route("payment/success")]
         public IActionResult PaymentSuccess()
         {

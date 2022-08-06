@@ -54,6 +54,11 @@
                             </select>
                             <span asp-validation-for="CatID" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="UploadImage" class="control-label"></label>
+                            <input asp-for="UploadImage" accept="image/*" class="form-control" required />
+                            <span asp-validation-for="UploadImage" class="text-danger"></span>
+                        </div>
                     <div class="form-group mt-3">
                         <input type="submit" value="Add" class="btn btn-primary" />
                         <a onclick="window.history.back();" class="btn btn-danger">Back</a>
