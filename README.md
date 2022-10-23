@@ -1,9 +1,9 @@
 # PetBD
 
-The purpose of this web application is to sell pets to the customer.
+This is an E-Commerce website. The purpose of this web application is to sell pets(Cats, Dogs, Pigeons etc.) to the customer.
 
 
-##### Demo Link: [www.blogapp.somee.com](http://www.petbd.somee.com/)
+##### Demo Link: [www.petbd.somee.com](http://www.petbd.somee.com/)
 
  #### Features
  - An admin can manage products and orders using admin panel.
